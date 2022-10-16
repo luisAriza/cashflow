@@ -1,7 +1,7 @@
 <template>
 	<Suspense>
 		<template #default>
-			<Home text="Hola Vue" />
+			<Home />
 		</template>
 		<template #fallBack>
 			<Splashscreen />
@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-	import { defineAsyncComponent } from "vue";
 	import Splashscreen from "@/components/Splashscreen.vue";
+	import { defineAsyncComponent } from "vue";
 
 	export default {
 		name: "App",
@@ -21,7 +21,7 @@
 				(): Promise<{ default: unknown }> =>
 					new Promise((resolve): void => {
 						setTimeout((): void => {
-							return resolve(import("./components/Home.vue"));
+							resolve(import("./components/Home.vue"));
 						}, 2500);
 					})
 			),
@@ -29,7 +29,7 @@
 	};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	html,
 	body,
 	#app {

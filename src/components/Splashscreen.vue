@@ -5,9 +5,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
-	import {} from "@heroicons/vue/24/solid";
-</script>
+<script lang="ts" setup></script>
 
 <style lang="scss" scoped>
 	.splashscreen {
