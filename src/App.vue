@@ -3,20 +3,20 @@
 		<template #default>
 			<Home />
 		</template>
-		<template #fallBack>
-			<Splashscreen />
+		<template #fallback>
+			<SplashScreen />
 		</template>
 	</Suspense>
 </template>
 
 <script lang="ts">
-	import Splashscreen from "@/components/Splashscreen.vue";
+	import SplashScreen from "@/components/SplashScreen.vue";
 	import { defineAsyncComponent } from "vue";
 
 	export default {
 		name: "App",
 		components: {
-			Splashscreen,
+			SplashScreen,
 			Home: defineAsyncComponent(
 				(): Promise<{ default: unknown }> =>
 					new Promise((resolve): void => {

@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-	import { ref } from "vue";
+	import { Ref, ref } from "vue";
 
-	const reload = ref((): void => location.reload());
+	const reload = (): Ref<void> => ref(location.reload());
 </script>
 
 <style lang="scss" scoped>
