@@ -4,7 +4,7 @@
 			<Header />
 		</template>
 		<template #resume>
-			<Resume />
+			<Resume label="Ahorro total" :total-amount="20000" :amount="amount" />
 		</template>
 		<template #movements>
 			<Movements />
@@ -17,6 +17,9 @@
 	import Header from "./Header.vue";
 	import Resume from "./Resume/Index.vue";
 	import Movements from "./Movements.vue";
+	import { ref } from "vue";
+
+	const amount = ref(10000);
 </script>
 
 <style lang="scss" scoped></style>

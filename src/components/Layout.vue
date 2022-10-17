@@ -5,10 +5,7 @@
 	<div class="resume">
 		<slot name="resume"></slot>
 	</div>
-	<div
-		class="movements"
-		:class="showMovements ? 'show-movements' : 'hidden-movements'"
-	>
+	<div class="movements" :class="showMovements && 'show-movements'">
 		<div class="head" @click="showMovements = !showMovements">
 			<div class="grip"></div>
 		</div>
@@ -62,17 +59,6 @@
 			transform: translateY(0);
 		}
 	}
-	.hidden-movements {
-		animation: hidden 0.4s;
-	}
-	@keyframes hidden {
-		from {
-			transform: translateY(-75vh);
-		}
-		to {
-			transform: translateY(0);
-		}
-	}
 	.movements .head {
 		display: flex;
 		justify-content: center;
@@ -84,7 +70,6 @@
 	.movements .body {
 		height: 75vh;
 		width: 100%;
-		background: black;
 	}
 
 	.movements .head .grip {
