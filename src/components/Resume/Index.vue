@@ -1,7 +1,13 @@
 <template>
 	<main>
-		<p>{{ label }}</p>
-		<h1>{{ amountVisual }}</h1>
+		<p>{{ labelVisual }}</p>
+		<h1>{{ amountCurrency }}</h1>
+		<div class="graphic">
+			<slot name="graphic"></slot>
+		</div>
+		<div class="action">
+			<slot name="action"></slot>
+		</div>
 	</main>
 </template>
 
@@ -9,8 +15,13 @@
 	import { defineProps, toRefs, computed, Ref } from "vue";
 
 	const props = defineProps({
+		totalLabel: {
+			type: String,
+			required: true,
+		},
 		label: {
 			type: String,
+			default: null,
 			required: true,
 		},
 		totalAmount: {
@@ -20,15 +31,25 @@
 		amount: {
 			type: Number,
 			default: null,
+			required: true,
 		},
 	});
-	const { label, totalAmount, amount } = toRefs(props);
+	const { totalLabel, label, totalAmount, amount } = toRefs(props);
 
-	const amountVisual = computed((): Ref<number> => {
-		return amount.value !== null ? amount : totalAmount;
+	const labelVisual = computed((): string => {
+		return label.value !== null ? label.value : totalLabel.value;
 	});
 
-	console.log(amountVisual);
+	const amountVisual = computed((): number => {
+		return amount.value !== null ? amount.value : totalAmount.value;
+	});
+	const currencyFormatter = new Intl.NumberFormat("es-CO", {
+		style: "currency",
+		currency: "COP",
+	});
+	const amountCurrency = computed((): string =>
+		currencyFormatter.format(amountVisual.value)
+	);
 </script>
 
 <style scoped lang="scss">
