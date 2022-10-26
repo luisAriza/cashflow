@@ -15,16 +15,6 @@
 	import { defineProps, toRefs } from "vue";
 	import Movement from "./Movement.vue";
 
-	type Movements = {
-		id: number | string;
-		title: string;
-		description: string;
-		amount: number | string;
-	};
-	type Props = {
-		movements: Movements[];
-	};
-
 	const props = defineProps({
 		movements: {
 			type: Array,
@@ -32,7 +22,7 @@
 			required: true,
 		},
 	});
-	const { movements }: Props = toRefs(props);
+	const { movements } = toRefs(props);
 </script>
 
 <style scoped lang="scss">
