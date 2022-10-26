@@ -10,9 +10,11 @@
 				:total-amount="totalAmount"
 				:amount="amount"
 			>
-				<template #graphic> graphic </template>
+				<template #graphic>
+					<Graphic />
+				</template>
 				<template #action>
-					<Action></Action>
+					<Action />
 				</template>
 			</Resume>
 		</template>
@@ -26,6 +28,7 @@
 	import Layout from "./Layout.vue";
 	import Header from "./Header.vue";
 	import Resume from "./Resume/Index.vue";
+	import Graphic from "./Resume/Graphic.vue";
 	import Action from "./Action.vue";
 	import Movements from "./Movements/Index.vue";
 	import { ref } from "vue";
