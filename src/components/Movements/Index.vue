@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-	import { defineProps, toRefs } from "vue";
+	import { defineProps, toRefs, ExtractPropTypes, ToRefs } from "vue";
 	import Movement from "./Movement.vue";
 
 	type Movements = {
@@ -33,7 +33,6 @@
 		movements: {
 			type: Array,
 			default: (): [] => [],
-			required: true,
 		},
 	});
 	const { movements }: Props = toRefs(props);

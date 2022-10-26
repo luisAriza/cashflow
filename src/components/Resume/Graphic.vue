@@ -6,7 +6,7 @@
 				fill="none"
 				stroke="#0689b0"
 				stroke-width="2"
-				points="0,0 100,75 200,75 300,150"
+				:points="points"
 			/>
 			<line
 				stroke="#04b500"
@@ -21,7 +21,36 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import { defineProps, toRefs, computed } from "vue";
+
+	const props = defineProps({
+		amounts: {
+			type: Array,
+			default: (): [] => [],
+		},
+	});
+	const { amounts } = toRefs(props);
+
+	const amountToPixels = () => {
+		const min = Math.min(...amounts.value);
+		const max = Math.max(...amounts.value);
+
+		return `${min}, ${max}`;
+	};
+	const points = computed(() => {
+		const total = amounts.value.length;
+		return Array(total)
+			.fill(75)
+			.reduce((points, amounts, index): string => {
+				const x = (300 / total) * (index + 1);
+				const y = amountToPixels();
+				console.log(y);
+
+				return `${points} ${x},${y}`;
+			}, "0, 75");
+	});
+</script>
 
 <style scoped lang="scss">
 	svg {

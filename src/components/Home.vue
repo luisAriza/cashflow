@@ -11,7 +11,7 @@
 				:amount="amount"
 			>
 				<template #graphic>
-					<Graphic />
+					<Graphic :amounts="amounts" />
 				</template>
 				<template #action>
 					<Action />
@@ -35,6 +35,7 @@
 
 	const amount = ref(10000);
 	const totalAmount = ref(20000);
+	const amounts = ref([100, 200, 500, 200 , -400, -600, 200, 0 , -150, 100]);
 	const movements = ref([
 		{
 			id: 1,
