@@ -3,9 +3,13 @@
 		<h2 class="title">Historial</h2>
 		<div class="content">
 			<Movement
-				v-for="movement in movements"
-				:key="movement.id"
-				:title="movement.title"
+				v-for="{ id, title, description, amount } in movements"
+				:key="id"
+				:id="id"
+				:title="title"
+				:description="description"
+				:amount="amount"
+				@remove="remove"
 			/>
 		</div>
 	</div>
@@ -15,6 +19,16 @@
 	import { defineProps, toRefs } from "vue";
 	import Movement from "./Movement.vue";
 
+	type Movements = {
+		id: number;
+		title: string;
+		description: string;
+		amount: number;
+	};
+	type Props = {
+		movements: Movements[];
+	};
+
 	const props = defineProps({
 		movements: {
 			type: Array,
@@ -22,7 +36,11 @@
 			required: true,
 		},
 	});
-	const { movements } = toRefs(props);
+	const { movements }: Props = toRefs(props);
+
+	const remove = (id: number): void => {
+		console.log("remove", id);
+	};
 </script>
 
 <style scoped lang="scss">
