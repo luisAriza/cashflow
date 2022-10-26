@@ -1,7 +1,14 @@
 <template>
 	<div>
 		<svg viewbox="0.0 300 200">
-			<line stroke="#c4c4c4" stroke-width="2" x1="0" y1="75" x2="300" y2="75" />
+			<line
+				stroke="#c4c4c4"
+				stroke-width="2"
+				x1="0"
+				:y1="zero"
+				x2="300"
+				:y2="zero"
+			/>
 			<polyline
 				fill="none"
 				stroke="#0689b0"
@@ -32,23 +39,26 @@
 	});
 	const { amounts } = toRefs(props);
 
-	const amountToPixels = () => {
+	const amountToPixels = (amount): number => {
 		const min = Math.min(...amounts.value);
 		const max = Math.max(...amounts.value);
 
-		return `${min}, ${max}`;
+		const amountAbs = amount + Math.abs(min);
+		const minmax = Math.abs(max) + Math.abs(min);
+
+		return 150 - ((amountAbs * 75) / minmax) * 2;
 	};
+
+	const zero = computed((): number => amountToPixels(0));
 	const points = computed(() => {
 		const total = amounts.value.length;
-		return Array(total)
-			.fill(75)
-			.reduce((points, amounts, index): string => {
-				const x = (300 / total) * (index + 1);
-				const y = amountToPixels();
-				console.log(y);
+		return amounts.value.reduce((points, amount, index): string => {
+			const x = (300 / total) * (index + 1);
+			const y = amountToPixels(amount);
+			console.log(y);
 
-				return `${points} ${x},${y}`;
-			}, "0, 75");
+			return `${points} ${x},${y}`;
+		}, `0, 68.19`);
 	});
 </script>
 
