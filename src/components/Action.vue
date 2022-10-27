@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref } from "vue";
+	import { ref, reactive, defineEmits } from "vue";
 	import Modal from "./Modal.vue";
 
 	const showModal = ref(false);
@@ -43,8 +43,17 @@
 	const description = ref("");
 	const movementType = ref("Ingreso");
 
+	const emit = defineEmits(["create"]);
+
 	const submit = (): void => {
-		showModal.value = false;
+		showModal.value = !showModal.value;
+		emit("create", {
+			title: title.value,
+			description: description.value,
+			amount: movementType.value === "Ingreso" ? amount.value : -amount.value,
+			time: new Date(),
+			id: new Date().getTime(),
+		});
 	};
 </script>
 
