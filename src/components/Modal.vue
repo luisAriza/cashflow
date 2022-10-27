@@ -42,8 +42,8 @@
 		color: var(--brand-blue);
 	}
 	.icon {
-		width: 24px;
-		height: 24px;
+		width: 28px;
+		height: 28px;
 		color: var(--brand-blue);
 	}
 </style>

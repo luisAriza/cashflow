@@ -8,7 +8,7 @@
 				total-label="Ahorro total"
 				label="label"
 				:total-amount="totalAmount"
-				:amount="amount"
+				:amount="movements.amount"
 			>
 				<template #graphic>
 					<Graphic :amounts="amounts" />
@@ -31,83 +31,18 @@
 	import Graphic from "./Resume/Graphic.vue";
 	import Action from "./Action.vue";
 	import Movements from "./Movements/Index.vue";
-	import { ref, computed } from "vue";
+	import { ref, computed, onMounted } from "vue";
 
 	type Movements = {
 		id: number;
 		title: string;
 		description: string;
 		amount: number;
-		time: number;
+		time: number | Date;
 	};
 
-	const amount = ref(10000);
-	const totalAmount = ref(20000);
-	const movements: any = ref([
-		{
-			id: 1,
-			title: "Movimiento 1",
-			description: "Deposito de salario",
-			amount: 1000,
-			time: new Date("10-01-2022"),
-		},
-		{
-			id: 2,
-			title: "Movimiento 2",
-			description: "Deposito de honorarios",
-			amount: 500,
-			time: new Date("10-01-2022"),
-		},
-		{
-			id: 3,
-			title: "Movimiento 3",
-			description: "Comida",
-			amount: -100,
-			time: new Date("10-01-2022"),
-		},
-		{
-			id: 4,
-			title: "Movimiento 4",
-			description: "Colegiatura",
-			amount: -1000,
-			time: new Date("10-01-2022"),
-		},
-		{
-			id: 5,
-			title: "Movimiento 5",
-			description: "Reparación equipo",
-			amount: -500,
-			time: new Date("10-01-2022"),
-		},
-		{
-			id: 6,
-			title: "Movimiento 6",
-			description: "Comisiones",
-			amount: 600,
-			time: new Date("10-01-2022"),
-		},
-		{
-			id: 7,
-			title: "Movimiento 7",
-			description: "Pago de un amigo",
-			amount: 200,
-			time: new Date("10-01-2022"),
-		},
-		{
-			id: 8,
-			title: "Movimiento 8",
-			description: "Reparación equipo",
-			amount: -1400,
-			time: new Date("09-10-2022"),
-		},
-		{
-			id: 9,
-			title: "Movimiento 9",
-			description: "Limpieza de la casa",
-			amount: -50,
-			time: new Date("09-11-2022"),
-		},
-	]);
+	const movements: any = ref([]);
+
 	const amounts = computed(() => {
 		const lastDays = movements.value
 			.filter((m: Movements): boolean => {
@@ -127,15 +62,37 @@
 			);
 		});
 	});
+
 	const create = (movement: Movements): void => {
 		movements.value.push(movement);
+		save();
 	};
 	const remove = (id: number): void => {
 		const index = movements.value.findIndex(
 			(m: Movements): boolean => m.id === id
 		);
 		movements.value.splice(index, 1);
+		save();
 	};
+	const save = (): void => {
+		localStorage.setItem("movements", JSON.stringify(movements.value));
+	};
+	const totalAmount = computed((): number =>
+		movements.value.reduce(
+			(suma: number, m: Movements): number => suma + m.amount,
+			0
+		)
+	);
+
+	onMounted((): void => {
+		const movementsMounted = JSON.parse(localStorage.getItem("movements"));
+
+		if (Array.isArray(movementsMounted)) {
+			movements.value = movementsMounted.map((m: Movements): Movements => {
+				return { ...m, time: new Date(m.time) };
+			});
+		}
+	});
 </script>
 
 <style lang="scss" scoped></style>

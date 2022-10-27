@@ -45,7 +45,7 @@
 	});
 	const { amounts } = toRefs(props);
 
-	const amountToPixels = (amount): number => {
+	const amountToPixels = (amount: number): number => {
 		const min = Math.min(...amounts.value);
 		const max = Math.max(...amounts.value);
 
@@ -56,14 +56,14 @@
 	};
 
 	const zero = computed((): number => amountToPixels(0));
-	const points = computed(() => {
+	const points = computed((): any => {
 		const total = amounts.value.length;
 		return amounts.value.reduce((points, amount, index): string => {
 			const x = (300 / total) * (index + 1);
 			const y = amountToPixels(amount);
 
 			return `${points} ${x},${y}`;
-		}, `0, 68.19`);
+		}, "0, 68.19");
 	});
 
 	const showPointer = ref(false);

@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, reactive, defineEmits } from "vue";
+	import { ref, defineEmits } from "vue";
 	import Modal from "./Modal.vue";
 
 	const showModal = ref(false);
@@ -54,6 +54,11 @@
 			time: new Date(),
 			id: new Date().getTime(),
 		});
+
+		title.value = "";
+		description.value = "";
+		amount.value = 0;
+		movementType.value = "Ingreso";
 	};
 </script>
 
