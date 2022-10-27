@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-	import { defineProps, toRefs, computed, Ref } from "vue";
+	import { defineProps, toRefs, computed } from "vue";
 
 	const props = defineProps({
 		totalLabel: {

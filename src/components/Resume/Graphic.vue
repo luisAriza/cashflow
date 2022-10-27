@@ -69,7 +69,9 @@
 	const showPointer = ref(false);
 	const pointer = ref(0);
 
-	const tap = ({ target, touches }) => {
+	const emit = defineEmits(["select"]);
+
+	const tap = ({ target, touches }): void => {
 		showPointer.value = true;
 		const elementWidth = target.getBoundingClientRect().width;
 		const elementX = target.getBoundingClientRect().x;
@@ -77,7 +79,7 @@
 
 		pointer.value = ((touchX - elementX) * 300) / elementWidth;
 	};
-	const untap = ({ target, touches }) => {
+	const untap = ({ target, touches }): void => {
 		showPointer.value = false;
 	};
 </script>

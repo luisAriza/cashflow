@@ -19,23 +19,13 @@
 	import { defineProps, toRefs, ExtractPropTypes, ToRefs } from "vue";
 	import Movement from "./Movement.vue";
 
-	type Movements = {
-		id: number;
-		title: string;
-		description: string;
-		amount: number;
-	};
-	type Props = {
-		movements: Movements[];
-	};
-
 	const props = defineProps({
 		movements: {
 			type: Array,
 			default: (): [] => [],
 		},
 	});
-	const { movements }: Props = toRefs(props);
+	const { movements }: any = toRefs(props);
 
 	const remove = (id: number): void => {
 		console.log("remove", id);
