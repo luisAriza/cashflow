@@ -22,7 +22,6 @@
 		label: {
 			type: String,
 			default: null,
-			required: true,
 		},
 		totalAmount: {
 			type: Number,
@@ -31,18 +30,13 @@
 		amount: {
 			type: Number,
 			default: null,
-			required: true,
 		},
 	});
 	const { totalLabel, label, totalAmount, amount } = toRefs(props);
 
-	const labelVisual = computed((): string => {
-		return label.value !== null ? label.value : totalLabel.value;
-	});
+	const labelVisual = computed((): string => label.value !== null ? label.value : totalLabel.value);
+	const amountVisual = computed((): number => amount.value !== null ? amount.value : totalAmount.value);
 
-	const amountVisual = computed((): number => {
-		return amount.value !== null ? amount.value : totalAmount.value;
-	});
 	const currencyFormatter = new Intl.NumberFormat("es-CO", {
 		style: "currency",
 		currency: "COP",

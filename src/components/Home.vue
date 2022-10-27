@@ -4,14 +4,9 @@
 			<Header />
 		</template>
 		<template #resume>
-			<Resume
-				total-label="Ahorro total"
-				label="label"
-				:total-amount="totalAmount"
-				:amount="movements.amount"
-			>
+			<Resume :total-label="'Ahorro total'" :label="label"  :total-amount="totalAmount" :amount="amount">
 				<template #graphic>
-					<Graphic :amounts="amounts" />
+					<Graphic :amounts="amounts" @select="select"/>
 				</template>
 				<template #action>
 					<Action @create="create" />
@@ -31,7 +26,7 @@
 	import Graphic from "./Resume/Graphic.vue";
 	import Action from "./Action.vue";
 	import Movements from "./Movements/Index.vue";
-	import { ref, computed, onMounted } from "vue";
+	import { ref, computed, onMounted, Ref } from "vue";
 
 	type Movements = {
 		id: number;
@@ -41,6 +36,8 @@
 		time: number | Date;
 	};
 
+	const amount  = ref(null);
+	const label = ref(null);
 	const movements: any = ref([]);
 
 	const amounts = computed(() => {
@@ -54,7 +51,7 @@
 			.map((m: Movements): number => m.amount);
 
 		return lastDays.map((m: Movements, i: number): number => {
-			const lastMovements = lastDays.slice(0, i);
+			const lastMovements = lastDays.slice(0, i + 1);
 
 			return lastMovements.reduce(
 				(suma: number, movement: number): number => suma + movement,
@@ -62,6 +59,12 @@
 			);
 		});
 	});
+	const totalAmount = computed((): number =>
+		movements.value.reduce(
+			(suma: number, m: Movements): number => suma + m.amount,
+			0
+		)
+	);
 
 	const create = (movement: Movements): void => {
 		movements.value.push(movement);
@@ -77,12 +80,9 @@
 	const save = (): void => {
 		localStorage.setItem("movements", JSON.stringify(movements.value));
 	};
-	const totalAmount = computed((): number =>
-		movements.value.reduce(
-			(suma: number, m: Movements): number => suma + m.amount,
-			0
-		)
-	);
+	const select = (el: number): void => {
+		amount.value = el;
+	};
 
 	onMounted((): void => {
 		const movementsMounted = JSON.parse(localStorage.getItem("movements"));
